@@ -10,7 +10,6 @@ nanobot-desktop/
 desktop/
 
 # Claude / AI assistant artifacts
-docs/superpowers/
 docs/plans/
 
 # webui (monorepo frontend)

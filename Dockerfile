@@ -26,6 +26,7 @@ COPY nanobot/ nanobot/
 COPY bridge/ bridge/
 COPY webui/ webui/
 RUN NANOBOT_FORCE_WEBUI_BUILD=1 uv pip install --system --no-cache .
+RUN uv pip install --system --no-cache "langfuse>=4.0.0,<5.0.0"
 
 # Build the WhatsApp bridge
 WORKDIR /app/bridge

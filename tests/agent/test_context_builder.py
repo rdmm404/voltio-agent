@@ -244,18 +244,19 @@ class TestBuildUserContent:
         result = builder._build_user_content("hello", [str(png)])
         assert isinstance(result, list)
         assert len(result) == 2
-        assert result[0]["type"] == "image_url"
-        assert result[0]["image_url"]["url"].startswith("data:image/png;base64,")
-        assert result[1]["type"] == "text"
-        assert result[1]["text"] == "hello"
+        assert result[0]["type"] == "text"
+        assert result[0]["text"] == "hello"
+        assert result[1]["type"] == "image_url"
+        assert result[1]["image_url"]["url"].startswith("data:image/png;base64,")
 
     def test_image_meta_includes_path(self, tmp_path):
         png = tmp_path / "test.png"
         png.write_bytes(b"\x89PNG\r\n\x1a\n" + b"\x00" * 16)
         builder = _builder(tmp_path)
         result = builder._build_user_content("hello", [str(png)])
-        assert "_meta" in result[0]
-        assert "path" in result[0]["_meta"]
+        image = next(block for block in result if block["type"] == "image_url")
+        assert "_meta" in image
+        assert "path" in image["_meta"]
 
 
 # ---------------------------------------------------------------------------
